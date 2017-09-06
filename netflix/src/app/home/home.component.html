@@ -1,0 +1,18 @@
+<md-grid-list cols="4" rowHeight="400px">
+  <md-grid-tile
+    *ngFor="let movie of movies | async"
+    [routerLink]="['movie', movie.show.id]"
+    [colspan]="1"
+    [rowspan]="1"
+    >
+    <md-card>
+      <md-card-header>
+        <md-card-title>{{movie.show.name}}</md-card-title>
+        <md-card-subtitle>{{movie.show.rating.average}}</md-card-subtitle>
+      </md-card-header>
+      <img md-card-image [src]="movie.show?.image?.medium" [alt]="movie.show.name">
+    </md-card>
+
+  </md-grid-tile>
+</md-grid-list>
+
