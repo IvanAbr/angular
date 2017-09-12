@@ -1,22 +1,23 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { Subscription } from "rxjs/Subscription";
 import { MoviesService } from "../services/movies.service";
 import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
-  selector: 'netflix-movie',
-  templateUrl: './movie.component.html',
-  styleUrls: ['./movie.component.scss']
+  selector: 'netflix-movie-list-item',
+  templateUrl: './movie-list-item.component.html',
+  styleUrls: ['./movie-list-item.component.scss']
 })
-export class MovieComponent implements OnInit, OnDestroy {
+export class MovieListItemComponent implements OnInit, OnDestroy {
+
 
   private _idSubscription: Subscription;
-  public movie: any;
+  @Input() public movie: any;
   public summary: any;
-  
+
   private _movieSubscription: Subscription;
-  private seasons: any[] = [
+  @Output() private seasons: any[] = [
     {
        "id":1,
        "url":"http://www.tvmaze.com/seasons/1/under-the-dome-season-1",
@@ -122,5 +123,4 @@ export class MovieComponent implements OnInit, OnDestroy {
   public sanitizeImage(image: string) {
     return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
   }
-
 }

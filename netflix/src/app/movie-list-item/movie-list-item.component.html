@@ -1,0 +1,12 @@
+<md-grid-list *ngIf="movie" cols="2" rowHeight="fit" class="grid-height">
+  <md-grid-tile colspan="1" rowspan="8" class="grid-image" [style.background-image]="sanitizeImage(movie?.image?.original)"></md-grid-tile>
+  <md-grid-tile colspan="1" rowspan="4" class="gutter">
+    <h6>Released on {{movie.updated | date}}</h6>
+    <p [innerHTML]="summary"></p>
+  </md-grid-tile>
+  <md-grid-tile colspan="1" rowspan="4" class="gutter">
+    <h4>Seasons:</h4>
+    <netflix-season-list></netflix-season-list>
+  </md-grid-tile>
+
+</md-grid-list>

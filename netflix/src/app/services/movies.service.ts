@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
+import { Http,
+  Request,
+  Response,
+  RequestOptions,
+  RequestMethod,
+  Headers,
+  URLSearchParams } from '@angular/http';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class MoviesService {
+  private baseurl: string;
   private _movies: Observable<any[]>;
-  constructor() {
+  constructor(private http: Http) {
+    this.baseurl = 'http://api.tvmaze.com';
     this._movies = this._fetchMovies();
   }
 
@@ -14,67 +25,28 @@ export class MoviesService {
   }
 
   public queryMovie(id: string) {
-    return Observable.of({
-      "score":17.007687,
-      "show":{
-         "id":169,
-         "url":"http://www.tvmaze.com/shows/169/breaking-bad",
-         "name":"Breaking Bad",
-         "type":"Scripted",
-         "language":"English",
-         "genres":[
-            "Drama",
-            "Crime",
-            "Thriller"
-         ],
-         "status":"Ended",
-         "runtime":60,
-         "premiered":"2008-01-20",
-         "officialSite":"http://www.amc.com/shows/breaking-bad",
-         "schedule":{
-            "time":"22:00",
-            "days":[
-               "Sunday"
-            ]
-         },
-         "rating":{
-            "average":9.3
-         },
-         "weight":97,
-         "network":{
-            "id":20,
-            "name":"AMC",
-            "country":{
-               "name":"United States",
-               "code":"US",
-               "timezone":"America/New_York"
-            }
-         },
-         "webChannel":null,
-         "externals":{
-            "tvrage":18164,
-            "thetvdb":81189,
-            "imdb":"tt0903747"
-         },
-         "image":{
-            "medium":"http://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg",
-            "original":"http://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
-         },
-         "summary":"<p><b>Breaking Bad</b> follows protagonist Walter White, a chemistry teacher who lives in New Mexico with his wife and teenage son who has cerebral palsy. White is diagnosed with Stage III cancer and given a prognosis of two years left to live. With a new sense of fearlessness based on his medical prognosis, and a desire to secure his family's financial security, White chooses to enter a dangerous world of drugs and crime and ascends to power in this world. The series explores how a fatal diagnosis such as White's releases a typical man from the daily concerns and constraints of normal society and follows his transformation from mild family man to a kingpin of the drug trade.</p>",
-         "updated":1502331382,
-         "_links":{
-            "self":{
-               "href":"http://api.tvmaze.com/shows/169"
-            },
-            "previousepisode":{
-               "href":"http://api.tvmaze.com/episodes/12253"
-            }
-         }
-      }
-   });
+    let requestOptions: RequestOptions = new RequestOptions(),
+      request: Request,
+      urlParams: URLSearchParams = new URLSearchParams(),
+      headers: Headers = new Headers();
+    let url = `${this.baseurl}/shows/${id}`;
+    urlParams.set('query','Bad');
+
+    requestOptions.url = url;
+    requestOptions.headers = headers;
+    requestOptions.method = RequestMethod.Get;
+    requestOptions.params = urlParams;
+    request = new Request(requestOptions);
+
+    return this.http.request(request)
+      .map((response: Response)=>response.json())
+      .map((movie: any)=> {
+        console.log(movie);
+        return movie;
+      })
   }
 
-  private _fetchMovies(): Observable<any[]> {
+  public _fetchMovies(): Observable<any[]> {
     return Observable.of([
       {
          "score":17.007687,
@@ -257,7 +229,7 @@ export class MoviesService {
             "type":"Reality",
             "language":"English",
             "genres":[
-   
+
             ],
             "status":"In Development",
             "runtime":11,
@@ -266,7 +238,7 @@ export class MoviesService {
             "schedule":{
                "time":"",
                "days":[
-   
+
                ]
             },
             "rating":{
@@ -310,7 +282,7 @@ export class MoviesService {
             "type":"Documentary",
             "language":"English",
             "genres":[
-   
+
             ],
             "status":"Ended",
             "runtime":60,
@@ -423,7 +395,7 @@ export class MoviesService {
             "type":"Reality",
             "language":"English",
             "genres":[
-   
+
             ],
             "status":"Running",
             "runtime":60,
@@ -479,7 +451,7 @@ export class MoviesService {
             "type":"Reality",
             "language":"English",
             "genres":[
-   
+
             ],
             "status":"To Be Determined",
             "runtime":60,
@@ -591,7 +563,7 @@ export class MoviesService {
             "type":"Reality",
             "language":"English",
             "genres":[
-   
+
             ],
             "status":"Ended",
             "runtime":30,

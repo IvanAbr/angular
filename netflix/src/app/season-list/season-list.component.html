@@ -1,0 +1,9 @@
+<md-list>
+  <md-list-item *ngFor="let season of seasons">
+    <img mdListAvatar [src]="season.image?.medium" alt="Image">
+    <h3 mdLine> {{season.number}} </h3>
+    <p mdLine>
+      <span> {{season.premiereDate}} </span>
+    </p>
+  </md-list-item>
+</md-list>

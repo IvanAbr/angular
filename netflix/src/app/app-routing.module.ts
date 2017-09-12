@@ -1,16 +1,17 @@
-import { MovieComponent } from './movie/movie.component';
-import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { MovieListItemComponent } from './movie-list-item/movie-list-item.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
+import {AboutComponent} from "./about/about.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: MovieListComponent
   },
   {
     path: 'movie/:id',
-    component: MovieComponent
+    component: MovieListItemComponent
   },
   {
     path: 'movie',
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: '/'
+  },
+  {
+    path: '**',
+    component: AboutComponent
   }
 ];
 
